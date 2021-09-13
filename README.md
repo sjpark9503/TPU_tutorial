@@ -39,6 +39,7 @@ gcloud config set project ${PROJECT_ID}
 ```
 You can find the information about the zone in the mail from TRC team. For example,
 ![image](https://user-images.githubusercontent.com/35256263/133046546-6db121c1-baca-44b9-8b07-75f3b08a2013.png)
+
 In this case, you should use
 ```
 export MTYPE=v2-8
@@ -48,7 +49,8 @@ for free TPU.
 
 4. _(optional)_ Create HDD for an additional storage.
 ```
-gcloud compute disks create <**Name of HDD**> \
+export DISK_NAME=<**Name of HDD**>
+gcloud compute disks create ${DISK_NAME} \
 --size=<**Size of HDD, e.g. 200GB**>  \
 --zone=${ZONE} \
 --type=pd-standard
@@ -57,11 +59,12 @@ You can find out the created disk in __Compute Engine-Disk__ section.
 ![image](https://user-images.githubusercontent.com/35256263/133048126-6b9795db-9fce-44c1-8652-46b69041c9c8.png)
 
 5. Create TPU VM
-
 ```
-gcloud alpha compute tpus tpu-vm create <**Name of HDD**> \
+export TPU_NAME=<**Name of TPU**>
+gcloud alpha compute tpus tpu-vm create ${TPU_NAME} \
 --project=${PROJECT_ID} \
 --zone=${ZONE} \
 --accelerator-type=${MTYPE} \
---version=v2-alpha
+--version=v2-alpha \
+--data-disk source=projects/${PROJECT_ID}/zones/${ZONE}/disks/${DISK_NAME},mode=read-write <--- Please remove this line if you skip the step 4.
 ```
