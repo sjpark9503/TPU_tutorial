@@ -9,6 +9,7 @@ Before the TPU VM, you can use TPU as follows
 1. Create VM (Virtual Machine, usually a linux server w/ CPU & RAM)
 2. Create TPU
 3. Connect VM and TPU via network
+
 But now TPU is physically attached to each TPU VM (imagine the GPU cards which is plugged in the server.), so you can use TPU VM with a single step,
 1. Create TPU & access with SSH
 
@@ -58,6 +59,7 @@ gcloud alpha compute tpus tpu-vm create ${TPU_NAME} \
 --data-disk source=projects/${PROJECT_ID}/zones/${ZONE}/disks/${DISK_NAME},mode=read-write <--- Please remove this line if you skip the step 4.
 ```
 You can check the created TPU in __Compute Engine-TPU__ section.
+![image](https://user-images.githubusercontent.com/35256263/133088618-2d0e67c3-2894-426c-a56d-1209e3337194.png)
 
 ### (2) Access to TPU VM
 It is possible to access to TPU VM w/ GCP shell like below,
@@ -72,14 +74,15 @@ To access the VM in GCP, you should register the SSH key to GCP.
 
 _For Windows user,_
 
-1) Download [PuttyGen](https://the.earth.li/~sgtatham/putty/latest/w64/puttygen.exe)
+i) Download [PuttyGen](https://the.earth.li/~sgtatham/putty/latest/w64/puttygen.exe)
 
-2) Click "generate" and shake your mouse on screen.
+ii) Click "generate" and shake your mouse on screen.
 
-3) Type your Google ID to the "key comment". For example,
-img
+iii) Type your Google ID to the "key comment". For example,
 
-4) Click "save private key".
+![image](https://user-images.githubusercontent.com/35256263/133088822-83d28417-252c-4274-990e-ad0022b025f2.png)
+
+iv) Click "save private key".
 
 _For Linux & Mac user,_
 ```
@@ -87,8 +90,10 @@ ssh-keygen -t rsa -f ~/.ssh/[KEY_FILE_NAME] -C "[GoogleID]" --> private key
 ```
 
 2. Check & Copy the public key.
+
 _For Windows user,_
-[img]
+
+![image](https://user-images.githubusercontent.com/35256263/133088898-361281aa-dde3-415b-a603-a3f2143ea2a8.png)
 
 _For Linux & Mac user,_
 ```
@@ -96,18 +101,20 @@ cat ~/.ssh/[KEY_FILE_NAME].pub
 ```
 
 3. Go to __Compute Engine-metadata-SSH key__ section in GCP.
-[img]
+
+![image](https://user-images.githubusercontent.com/35256263/133089036-014c549c-c348-4841-89b6-5d26894aed6d.png)
 4. Press "Edit"
-[img]
+
+![image](https://user-images.githubusercontent.com/35256263/133089378-d0413903-e164-4718-83dd-06a890e9a78c.png)
+
 5. Paste the public key to the empty box.
-[img]
+
 6. Press "Save".
 
 7. Access to VM w/ SSH clients.
 ```
 sudo ssh -t [GoogleID]@[TPU external IP] -p 22 -i [Private Key Path]
 ```
-[img]
 
 ## (3) VM settings
 1. Add XRT configuration
@@ -116,6 +123,7 @@ sudo vi ~/.bashrc
 export XRT_TPU_CONFIG="localservice;0;localhost:51011" --> add this to bashrc
 ```
 2. _(optional)_ Mount HDD to VM
+
 Please access to TPU VM and follow the [link](https://cloud.google.com/compute/docs/disks/add-persistent-disk)
 
 ### Reference
