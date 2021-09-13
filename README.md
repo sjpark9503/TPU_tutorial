@@ -1,7 +1,7 @@
 # TPU_tutorial
 ## Intro
 In this tutorial, we will learn...
-1. What is TRC program?
+1. Intro & What is TRC program?
 2. TPU environment setting
 3. Easiest way to run experiments on TPU
 4. Some caveats when you're using TPU
@@ -19,52 +19,3 @@ Participants in the TRC program will be expected to share their TRC-supported re
 
 ### TRC application link
 You can grant an access to TPUs within a week! [Link](https://docs.google.com/forms/d/e/1FAIpQLSeBXCs4vatyQUcePgRKh_ZiKhEODXkkoeqAKzFa_d-oSVp3iw/viewfor)
-
-## Create TPU environment
-In this section, we will create TPU using Google Cloud Platform (GCP) and set the environment.
-
-### _(optional)_  What is TPU?
-I highly recommend you to read **[this](https://cloud.google.com/tpu/docs/system-architecture-tpu-vm)** if you are not familiar with TPU. Otherwise, you can skip this section.
-
-### Create TPU VM with GCP console
-1. Access to [GCP console](console.cloud.google.com)
-2. Turn on the GCP shell
-![image](https://user-images.githubusercontent.com/35256263/133045746-48afb741-3a47-44b4-81da-793d88d8fddf.png)
-3. Add some configurations to the shell.
-```
-export PROJECT_ID=<**Your GCP project ID**>
-export MTYPE=<**TPU type, v2-8 or v3-8**>
-export ZONE=<**appropriate zone for the TPU type**>
-gcloud config set project ${PROJECT_ID}
-```
-You can find the information about the zone in the mail from TRC team. For example,
-![image](https://user-images.githubusercontent.com/35256263/133046546-6db121c1-baca-44b9-8b07-75f3b08a2013.png)
-
-In this case, you should use
-```
-export MTYPE=v2-8
-export ZONE=us-central1-f
-```
-for free TPU.
-
-4. _(optional)_ Create HDD for an additional storage.
-```
-export DISK_NAME=<**Name of HDD**>
-gcloud compute disks create ${DISK_NAME} \
---size=<**Size of HDD, e.g. 200GB**>  \
---zone=${ZONE} \
---type=pd-standard
-```
-You can find out the created disk in __Compute Engine-Disk__ section.
-![image](https://user-images.githubusercontent.com/35256263/133048126-6b9795db-9fce-44c1-8652-46b69041c9c8.png)
-
-5. Create TPU VM
-```
-export TPU_NAME=<**Name of TPU**>
-gcloud alpha compute tpus tpu-vm create ${TPU_NAME} \
---project=${PROJECT_ID} \
---zone=${ZONE} \
---accelerator-type=${MTYPE} \
---version=v2-alpha \
---data-disk source=projects/${PROJECT_ID}/zones/${ZONE}/disks/${DISK_NAME},mode=read-write <--- Please remove this line if you skip the step 4.
-```
