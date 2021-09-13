@@ -45,5 +45,5 @@ accelerate launch [file_name].py <-- was python [file_name].py
 ```
 Done 😊. Enjoy!
 
-### Example codes
+## Example codes
 https://github.com/huggingface/accelerate/tree/main/examples
