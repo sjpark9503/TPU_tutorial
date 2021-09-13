@@ -116,7 +116,7 @@ cat ~/.ssh/[KEY_FILE_NAME].pub
 sudo ssh -t [GoogleID]@[TPU external IP] -p 22 -i [Private Key Path]
 ```
 
-## (3) VM settings
+### (3) VM settings
 1. Add XRT configuration
 ```
 sudo vi ~/.bashrc
