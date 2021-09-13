@@ -26,6 +26,7 @@ from accelerate import Accelerator
 accelerator = Accelerator()
 ```
 This should happen as early as possible in your training script!
+
 2. Remove the call to(device) or cuda() for your model and input data.
 
 3. Pass all objects relevant to training (optimizer, model, training dataloader) to the prepare() method. This will make sure everything is ready for training.
